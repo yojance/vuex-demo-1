@@ -1,16 +1,21 @@
 import { createStore } from 'vuex'
+import axios from 'axios'
 
 export default createStore({
   state: {
     contentPageTitle: 'Latest Videos',
     contentPageType: 'course',
+    contentPageItems: [],
   },
   mutations: {
     updateContentPageType (state, contentType) {
-      state.contentType = contentType
+      state.contentPageType = contentType
     },
     updateContentPageTitle (state, pageTitle) {
       state.contentPageTitle = pageTitle
+    },
+    updateContentPageItems (state, items) {
+      state.contentPageItems = Object.assign({}, items)
     },
   },
   actions: {
@@ -19,6 +24,14 @@ export default createStore({
     },
     setContentPageTitle ({ commit }, pageTitle) {
       commit('updateContentPageTitle', `Viewing Our Latest ${pageTitle}.`)
+    },
+    fetchContentPageItem ({ commit, state }, contentType) {
+      const endpoint = `https://members.kelbyone.com/wp-json/ko/v4${state.contentPageType}?include=instructors&per_page=3&page=1`
+      axios.get(
+        endpoint,
+      ).then((res) => {
+        commit('updateContentPageItems', res.data.data)
+      })
     },
   },
   modules: {},
