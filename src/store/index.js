@@ -59,7 +59,9 @@ export const store = {
     const data = await api.load(`https://members.kelbyone.com/wp-json/ko/v4/${type}?per_page=1`);
     return state.hero = data[0];
   },
-  loadItems: async () => {
-
+  loadItems: async (type, page = 1, limit = 12) => {
+    state.items = [];
+    const data = await api.load(`https://members.kelbyone.com/wp-json/ko/v4/${type}?page=${page}&per_page=${limit}`);
+    return state.items = data;
   }
 }
