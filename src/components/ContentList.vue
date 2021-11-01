@@ -1,7 +1,9 @@
 <template>
   <div>
     <section class="container mx-auto p-10 md:py-20 px-5 md:p-10">
+      <h1 v-if="!data.items.length">Loading {{ type }}...</h1>
       <section
+        v-else
         class="
           grid grid-cols-1
           md:grid-cols-2
@@ -11,7 +13,7 @@
         "
       >
         <ContentCard
-          v-for="item in currentItems"
+          v-for="item in data.items"
           :key="item.id"
           :content="item"
         />
@@ -21,18 +23,36 @@
 </template>
 
 <script>
+import { reactive, computed } from "vue";
+import { store, state } from "@/store";
+
 import ContentCard from "@/components/ContentCard";
 
 export default {
   name: "ContentList",
   components: { ContentCard },
-  computed: {
-    currentItems() {
-      return this.$store.state.contentPageItems;
+  props: ["type"],
+  watch: {
+    type(type) {
+      store.loadItems(type);
     },
+  },
+  setup(props) {
+    const data = reactive({
+      items: computed(() => state.items),
+    });
+
+    store.loadItems(props.type);
+
+    return { data };
   },
 };
 </script>
 
 <style scoped>
+h1 {
+  text-align: center;
+  font-size: 48px;
+  width: 100%;
+}
 </style>
