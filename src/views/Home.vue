@@ -3,9 +3,6 @@
     <section class="container mx-auto p-3 md:py-3 px-0 md:p-5 md:px-0">
       <HeroContent v-if="data.hero" :content="data.hero" />
     </section>
-    <section
-      class="container mx-auto p-3 md:py-3 px-0 md:p-5 md:px-0"
-    ></section>
   </div>
 </template>
 
