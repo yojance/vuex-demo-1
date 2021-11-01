@@ -57,7 +57,7 @@ export const state = reactive({
 export const store = {
   loadHero: async (type) => {
     const data = await api.load(`https://members.kelbyone.com/wp-json/ko/v4/${type}?per_page=1`);
-    return state.hero = data;
+    return state.hero = data[0];
   },
   loadItems: async () => {
 
