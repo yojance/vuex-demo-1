@@ -14,12 +14,23 @@
 import axios from "axios";
 import HeroContent from "@/components/HeroContent";
 import ContentList from "@/components/ContentList";
+import { store, state } from "@/store";
+import { reactive, computed } from "vue";
 
 export default {
   name: "Home",
   components: {
     HeroContent,
     ContentList,
+  },
+  setup() {
+    const data = reactive({
+      hero: computed(() => state.hero),
+    });
+
+    store.loadHero("courses");
+
+    return { data };
   },
   created() {
     this.loadHeroContent();
