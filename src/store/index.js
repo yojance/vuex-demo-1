@@ -8,24 +8,24 @@ export default createStore({
     contentPageItems: [],
   },
   mutations: {
-    updateContentPageType (state, contentType) {
+    updateContentPageType(state, contentType) {
       state.contentPageType = contentType
     },
-    updateContentPageTitle (state, pageTitle) {
+    updateContentPageTitle(state, pageTitle) {
       state.contentPageTitle = pageTitle
     },
-    updateContentPageItems (state, items) {
+    updateContentPageItems(state, items) {
       state.contentPageItems = Object.assign({}, items)
     },
   },
   actions: {
-    setContentPageType ({ commit }, contentType) {
+    setContentPageType({ commit }, contentType) {
       commit('updateContentPageType', contentType)
     },
-    setContentPageTitle ({ commit }, pageTitle) {
+    setContentPageTitle({ commit }, pageTitle) {
       commit('updateContentPageTitle', `Viewing Our Latest ${pageTitle}.`)
     },
-    fetchContentPageItem ({ commit, state }, contentType) {
+    fetchContentPageItem({ commit, state }, contentType) {
       const endpoint = `https://members.kelbyone.com/wp-json/ko/v4${state.contentPageType}?include=instructors&per_page=3&page=1`
       axios.get(
         endpoint,
