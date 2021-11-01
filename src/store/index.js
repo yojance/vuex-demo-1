@@ -37,6 +37,8 @@ export default createStore({
   modules: {},
 })
 
+import { reactive, ref } from 'vue';
+
 export const api = {
   fetch: async () => {
 
@@ -47,6 +49,10 @@ export const api = {
 }
 
 export const store = {
+  state: reactive({
+    hero: ref(null),
+    items: ref([])
+  }),
   loadHero: async () => {
 
   },
