@@ -1,36 +1,32 @@
 <template>
   <div>
-    {{ contentPageTitle }}
-    <ContentList />
+    View our latest {{ data.type }}
+    <ContentList :type="data.type" />
   </div>
 </template>
 
 <script>
-import ContentList from '@/components/ContentList'
+import { computed, reactive, ref } from "vue";
+import { useRoute } from "vue-router";
+import { store } from "@/store";
+
+import ContentList from "@/components/ContentList";
 
 export default {
-  name: 'ContentPage',
+  name: "ContentPage",
   components: {
     ContentList,
   },
-  beforeRouteEnter (to, from, next) {
-    next(vm => {
-      vm.$store.dispatch('setContentPageType', vm.$route.path)
-      vm.$store.dispatch('setContentPageTitle', vm.$route.name)
-      vm.$store.dispatch('fetchContentPageItem', vm.$route.path)
-    })
+  setup() {
+    const route = useRoute();
+    const data = reactive({
+      type: computed(() => route.name),
+    });
+
+    return { data };
   },
-  computed: {
-    contentPageTitle () {
-      return this.$store.state.contentPageTitle
-    },
-    contentPageType () {
-      return this.$store.state.contentPageType
-    },
-  },
-}
+};
 </script>
 
 <style scoped>
-
 </style>
