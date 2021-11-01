@@ -1,11 +1,13 @@
 <template>
   <div>
-    {{ contentPageTitle }}
+    View our latest {{ type }}
     <ContentList />
   </div>
 </template>
 
 <script>
+import { useRoute } from "vue-router";
+
 import ContentList from "@/components/ContentList";
 
 export default {
@@ -13,20 +15,11 @@ export default {
   components: {
     ContentList,
   },
-  beforeRouteEnter(to, from, next) {
-    next((vm) => {
-      vm.$store.dispatch("setContentPageType", vm.$route.path);
-      vm.$store.dispatch("setContentPageTitle", vm.$route.name);
-      vm.$store.dispatch("fetchContentPageItem", vm.$route.path);
-    });
-  },
-  computed: {
-    contentPageTitle() {
-      return this.$store.state.contentPageTitle;
-    },
-    contentPageType() {
-      return this.$store.state.contentPageType;
-    },
+  setup() {
+    const route = useRoute();
+    const type = route.name;
+
+    return { type };
   },
 };
 </script>
