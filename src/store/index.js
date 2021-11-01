@@ -36,3 +36,21 @@ export default createStore({
   },
   modules: {},
 })
+
+export const api = {
+  fetch: async () => {
+
+  },
+  get: async () => {
+
+  }
+}
+
+export const store = {
+  loadHero: async () => {
+
+  },
+  loadItems: async () => {
+
+  }
+}
