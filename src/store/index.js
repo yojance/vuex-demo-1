@@ -4,24 +4,25 @@ import { reactive, ref } from 'vue';
 export const api = {
   load: async (url) => {
     const response = await fetch(url)
-    const data = await response.json();
-    return data.data;
+    return await response.json();
   }
 }
 
 export const state = reactive({
   hero: ref(null),
-  items: ref([])
+  items: ref([]),
+  pagination: ref({})
 });
 
 export const store = {
   loadHero: async (type) => {
-    const data = await api.load(`https://members.kelbyone.com/wp-json/ko/v4/${type}?per_page=1`);
-    return state.hero = data[0];
+    const res = await api.load(`https://members.kelbyone.com/wp-json/ko/v4/${type}?per_page=1`);
+    return state.hero = res.data[0];
   },
   loadItems: async (type, page = 1, limit = 12) => {
     state.items = [];
-    const data = await api.load(`https://members.kelbyone.com/wp-json/ko/v4/${type}?page=${page}&per_page=${limit}`);
-    return state.items = data;
+    const res = await api.load(`https://members.kelbyone.com/wp-json/ko/v4/${type}?page=${page}&per_page=${limit}`);
+    state.pagination = res.meta
+    return state.items = res.data;
   }
 }
